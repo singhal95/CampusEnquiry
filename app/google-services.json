@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "998551181906",
+    "firebase_url": "https://campusenquiry-4aeb9.firebaseio.com",
+    "project_id": "campusenquiry-4aeb9",
+    "storage_bucket": "campusenquiry-4aeb9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998551181906:android:046e33c9b95af2cd",
+        "android_client_info": {
+          "package_name": "campus.iit.nitin.com.campusenquiry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998551181906-v3vge5o80b703k1g0p6jc0ebbef3fapp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "campus.iit.nitin.com.campusenquiry",
+            "certificate_hash": "6d502944b0629ad17111914807e833bfd98191cc"
+          }
+        },
+        {
+          "client_id": "998551181906-1r04gclv3i6ferrtkgrdplsh7gidf940.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0DNaTZI7pvPUi-gSZR6mai96pUS-U0uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998551181906-1r04gclv3i6ferrtkgrdplsh7gidf940.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
