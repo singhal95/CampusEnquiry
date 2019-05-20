@@ -31,6 +31,8 @@ public class SignupActivity extends AppCompatActivity {
     private RadioButton teacherbutton,studentbutton;
     private SharedPreferences database;
     private SharedPreferences.Editor editor;
+    private SharedPreferences database1;
+    private SharedPreferences.Editor editor1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,9 @@ public class SignupActivity extends AppCompatActivity {
         reenteredpassword=findViewById(R.id.input_reEnterPassword);
         database=getSharedPreferences("TEACHER",MODE_PRIVATE);
         editor=database.edit();
+        database1=getSharedPreferences("STUDENT",MODE_PRIVATE);
+        editor1=database1.edit();
+
 
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +90,35 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             editor.putString("email",email);
                             editor.putString("userid",mauth.getUid());
+                            editor.putInt("category",0);
                             editor.putString("password",password);
                             editor.commit();
-                            progressDialog.dismiss();
-                            signupsuccesss();
+
+                            if(radioGroup.getCheckedRadioButtonId()==R.id.teacher){
+                                editor.putString("email",email);
+                                editor.putString("userid",mauth.getUid());
+                                editor.putInt("category",0);
+                                editor.putString("password",password);
+                                editor.commit();
+
+                                progressDialog.dismiss();
+                                signupsuccesss();
+
+                            }
+                            else {
+                                editor1.putString("email",email);
+                                editor1.putString("userid",mauth.getUid());
+                                editor1.putInt("category",0);
+                                editor1.putString("password",password);
+                                editor1.commit();
+
+                                progressDialog.dismiss();
+                               signupstudentsucess();
+                            }
+
+
 
 
 
@@ -108,6 +135,12 @@ public class SignupActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void signupstudentsucess(){
+        signupbutton.setEnabled(true);
+        startActivity(new Intent(SignupActivity.this,StudentRegisterActivity.class));
+        finish();
     }
 
     public void signupsuccesss(){

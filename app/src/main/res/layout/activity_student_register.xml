@@ -1,9 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="campus.iit.nitin.com.campusenquiry.StudentRegisterActivity">
+    android:orientation="vertical"
+    tools:context="campus.iit.nitin.com.campusenquiry.TeacherRegisterActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:text="WELCOME"
+                android:layout_gravity="center"
+                android:padding="16dp"/>
+
+
+
+
+            <ImageButton
+                android:id="@+id/displayimage"
+                android:layout_width="170dp"
+                android:background="#7E57C2"
+                android:layout_height="170dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_marginTop="30dp"
+                android:src="@drawable/user_img" />
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:layout_marginTop="35dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:text="name"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/edit_text_border"
+                    android:id="@+id/namevalue"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:text="Student ID"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/edit_text_border"
+                    android:id="@+id/sid"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:text="Department"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/edit_text_border"
+                    android:id="@+id/departmentvalue"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:text="Mobile Number"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:background="@drawable/edit_text_border"
+                    android:id="@+id/mobilenumbervalue"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_gravity="center"
+                android:id="@+id/save"/>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </ScrollView>
+</LinearLayout>

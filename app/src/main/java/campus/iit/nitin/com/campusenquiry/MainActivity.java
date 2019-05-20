@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton teacherbutton,studentbutton;
     private SharedPreferences database;
     private SharedPreferences.Editor editor;
-
-
+    private SharedPreferences database1;
+    private SharedPreferences.Editor editor1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
        radioGroup=findViewById(R.id.category);
        teacherbutton=findViewById(R.id.teacher);
        studentbutton=findViewById(R.id.student);
+        database=getSharedPreferences("TEACHER",MODE_PRIVATE);
+        editor=database.edit();
+        database1=getSharedPreferences("STUDENT",MODE_PRIVATE);
+        editor1=database1.edit();
        signuplink.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -94,7 +98,25 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            onLoginSuccess();
+                            if(radioGroup.getCheckedRadioButtonId()==R.id.teacher){
+                                editor.putString("email",email);
+                                editor.putString("userid",mauth.getUid());
+                                editor.putInt("category",0);
+                                editor.putString("password",password);
+                                editor.commit();
+                                progressDialog.dismiss();
+                               onLoginSuccess();
+
+                            }
+                            else {
+                                editor1.putString("email",email);
+                                editor1.putInt("category",1);
+                                editor1.putString("userid",mauth.getUid());
+                                editor1.putString("password",password);
+                                editor1.commit();
+                                progressDialog.dismiss();
+                               onLoginstudentsucess();
+                            }
                         } else {
                             Toast.makeText(MainActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                             onLoginFailed();
@@ -109,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+   private void onLoginstudentsucess(){
+       loginButton.setEnabled(true);
+       startActivity(new Intent(MainActivity.this,StudentMainScreen.class));
+       finish();
     }
 
     private void onLoginSuccess() {
