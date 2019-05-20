@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText emailText,passwordtext;
     private Button loginButton;
     private TextView signuplink;
+    private RadioGroup radioGroup;
+    private RadioButton teacherbutton,studentbutton;
     private SharedPreferences database;
     private SharedPreferences.Editor editor;
 
@@ -37,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
        passwordtext=findViewById(R.id.input_password);
        signuplink=findViewById(R.id.link_signup);
        loginButton=findViewById(R.id.btn_login);
+       radioGroup=findViewById(R.id.category);
+       teacherbutton=findViewById(R.id.teacher);
+       studentbutton=findViewById(R.id.student);
        signuplink.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
@@ -47,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
        loginButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
+             login();
            }
        });
     }
@@ -58,13 +65,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void onLoginFailed() {
+   public void onLoginFailed() {
         Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_LONG).show();
 
        loginButton.setEnabled(true);
     }
 
-    private void login() {
+    public void login() {
 
         if (!validate()) {
             onLoginFailed();
@@ -81,28 +88,26 @@ public class MainActivity extends AppCompatActivity {
         final String email = emailText.getText().toString();
         final String password = passwordtext.getText().toString();
 
-
-        mauth.createUserWithEmailAndPassword(email, password)
+        mauth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            FirebaseUser user = mauth.getCurrentUser();
-                            editor.putString("email", email);
-                            editor.putString("userid", mauth.getUid());
-                            editor.putString("password", password);
-                            editor.commit();
-                            onLoginSuccess();
                             progressDialog.dismiss();
+                            onLoginSuccess();
                         } else {
                             Toast.makeText(MainActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                             onLoginFailed();
                             progressDialog.dismiss();
+
                         }
 
                         // ...
                     }
                 });
+
+
+
 
     }
 
@@ -111,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this,MainScreen.class));
         finish();
     }
-    private boolean  validate(){
+    public boolean  validate(){
         boolean valid = true;
 
         String email = emailText.getText().toString();
@@ -130,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             passwordtext.setError(null);
         }
+
+    if(!teacherbutton.isChecked() || !studentbutton.isChecked())
+        {
+            valid=false;
+        }
+
 
         return valid;
     }
