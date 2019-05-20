@@ -44,6 +44,8 @@ public class SignupActivity extends AppCompatActivity {
         teacherbutton=findViewById(R.id.teacher);
         studentbutton=findViewById(R.id.student);
         reenteredpassword=findViewById(R.id.input_reEnterPassword);
+        database=getSharedPreferences("TEACHER",MODE_PRIVATE);
+        editor=database.edit();
 
         signupbutton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +75,8 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
-        String email=emailText.getText().toString();
-        String password=passwordtext.getText().toString();
+        final String email=emailText.getText().toString();
+        final String password=passwordtext.getText().toString();
         String repassword=reenteredpassword.getText().toString();
 
 
@@ -84,6 +86,10 @@ public class SignupActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
+                            editor.putString("email",email);
+                            editor.putString("userid",mauth.getUid());
+                            editor.putString("password",password);
+                            editor.commit();
                             progressDialog.dismiss();
                             signupsuccesss();
 
@@ -106,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
 
     public void signupsuccesss(){
       signupbutton.setEnabled(true);
-        startActivity(new Intent(SignupActivity.this,MainScreen.class));
+        startActivity(new Intent(SignupActivity.this,TeacherRegisterActivity.class));
         finish();
     }
     public void onSignupFailed() {

@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="campus.iit.nitin.com.campusenquiry">
 
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,20 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".SignupActivity" />
-        <activity
-            android:name=".MainScreen"
-            android:label="@string/title_activity_main_screen"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TeacherRegisterActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StudentActivity"></activity>
+        <activity android:name=".SignupActivity" />
+        <activity
+            android:name=".MainScreen"
+            android:label="@string/title_activity_main_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TeacherRegisterActivity" />
+        <activity android:name=".StudentActivity" />
+        <activity android:name=".StudentRegisterActivity" />
+        <activity
+            android:name=".StudentMainScreen"
+            android:label="@string/title_activity_student_main_screen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

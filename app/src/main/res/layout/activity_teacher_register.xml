@@ -28,7 +28,10 @@
                 android:layout_gravity="center"
                 android:padding="16dp"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
+
+
+
+            <ImageButton
                 android:id="@+id/displayimage"
                 android:layout_width="170dp"
                 android:background="#7E57C2"
