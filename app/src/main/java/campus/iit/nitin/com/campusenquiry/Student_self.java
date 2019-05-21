@@ -23,18 +23,20 @@ import com.squareup.picasso.Picasso;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class Teacher_Self extends Fragment {
+public class Student_self extends Fragment {
 
 
 
-    TextView name,empid,location,department,phonenumber,officenumberl,email;
-            ImageView imageView;
-
+    TextView depatment,name,sid,mobile,email;
+    ImageView imageView;
     FirebaseDatabase firebasedatabase;
     DatabaseReference myRef;
     SharedPreferences database;
     SharedPreferences.Editor editor;
     String imageurl;
+    public Student_self() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,39 +45,36 @@ public class Teacher_Self extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view=inflater.inflate(R.layout.fragment_teacher__self, container, false);
+        View view= inflater.inflate(R.layout.fragment_student_self, container, false);
         firebasedatabase = FirebaseDatabase.getInstance();
-        myRef = firebasedatabase.getReference("Teachers");
-        database = getContext().getSharedPreferences("TEACHER", MODE_PRIVATE);
+        myRef = firebasedatabase.getReference("Students");
+        database = getContext().getSharedPreferences("STUDENT", MODE_PRIVATE);
         editor = database.edit();
         name=view.findViewById(R.id.namevalue);
-        empid=view.findViewById(R.id.empid);
-        location=view.findViewById(R.id.locationvalue);
-        department=view.findViewById(R.id.departmentvalue);
-        officenumberl=view.findViewById(R.id.officenumbervalue);
-        phonenumber=view.findViewById(R.id.mobilenumbervalue);
-        imageView=view.findViewById(R.id.displayimage);
+        depatment=view.findViewById(R.id.departmentvalue);
+        sid=view.findViewById(R.id.sid);
         email=view.findViewById(R.id.emailvalue);
+        mobile=view.findViewById(R.id.mobilenumbervalue);
+        imageView=view.findViewById(R.id.displayimage);
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Updating...");
         progressDialog.show();
+
         myRef.child(database.getString("userid","TEST")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
                     name.setText(dataSnapshot.child("name").getValue(String.class));
                     email.setText(dataSnapshot.child("email").getValue(String.class));
-                    empid.setText(dataSnapshot.child("empid").getValue(String.class));
-                    location.setText(dataSnapshot.child("location").getValue(String.class));
-                    department.setText(dataSnapshot.child("department").getValue(String.class));
-                    officenumberl.setText(dataSnapshot.child("officenumber").getValue(String.class));
-                    phonenumber.setText(dataSnapshot.child("mobilenumber").getValue(String.class));
-                    imageurl = dataSnapshot.child("profilephotourl").getValue(String.class);
+                 depatment.setText(dataSnapshot.child("department").getValue(String.class));
+                    mobile.setText(dataSnapshot.child("mobilenumber").getValue(String.class));
+                    sid.setText(dataSnapshot.child("sid").getValue(String.class));
+                    imageurl = dataSnapshot.child("photourl").getValue(String.class);
                     if (!imageurl.equals("TEST")) {
                         Picasso.get().load(imageurl).into(imageView);
                     }
@@ -93,10 +92,9 @@ public class Teacher_Self extends Fragment {
             }
         });
 
-
-
-       return view;
+        return view;
     }
+
 
 
 }

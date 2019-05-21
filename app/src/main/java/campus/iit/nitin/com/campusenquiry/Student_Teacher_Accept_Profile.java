@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,18 +24,23 @@ import com.squareup.picasso.Picasso;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class Teacher_Self extends Fragment {
+public class Student_Teacher_Accept_Profile extends Fragment {
 
 
 
     TextView name,empid,location,department,phonenumber,officenumberl,email;
-            ImageView imageView;
+    ImageView imageView;
+    Button Chat;
 
     FirebaseDatabase firebasedatabase;
     DatabaseReference myRef;
     SharedPreferences database;
     SharedPreferences.Editor editor;
     String imageurl;
+    public Student_Teacher_Accept_Profile() {
+        // Required empty public constructor
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,13 +49,13 @@ public class Teacher_Self extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       View view=inflater.inflate(R.layout.fragment_teacher__self, container, false);
+        View view=inflater.inflate(R.layout.fragment_student__teacher__accept__profile, container, false);
         firebasedatabase = FirebaseDatabase.getInstance();
         myRef = firebasedatabase.getReference("Teachers");
-        database = getContext().getSharedPreferences("TEACHER", MODE_PRIVATE);
+        database = getContext().getSharedPreferences("STUDENT", MODE_PRIVATE);
         editor = database.edit();
         name=view.findViewById(R.id.namevalue);
         empid=view.findViewById(R.id.empid);
@@ -58,13 +64,13 @@ public class Teacher_Self extends Fragment {
         officenumberl=view.findViewById(R.id.officenumbervalue);
         phonenumber=view.findViewById(R.id.mobilenumbervalue);
         imageView=view.findViewById(R.id.displayimage);
+        Chat=view.findViewById(R.id.chat);
         email=view.findViewById(R.id.emailvalue);
-
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Updating...");
+        progressDialog.setMessage("Showing Profile...");
         progressDialog.show();
-        myRef.child(database.getString("userid","TEST")).addValueEventListener(new ValueEventListener() {
+        myRef.child(database.getString("teacherid","TEST")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
@@ -92,10 +98,15 @@ public class Teacher_Self extends Fragment {
 
             }
         });
+        Chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
-
-       return view;
+        return view;
     }
 
 
