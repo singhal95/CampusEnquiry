@@ -283,7 +283,7 @@ public class TeacherRegisterActivity extends AppCompatActivity {
             teacher=new Teacher(name.getText().toString(),employeid.getText().toString(),locationvalue.getText().toString(),department.getText().toString(),officenumber.getText().toString(),mobilenumber.getText().toString(),"TEST",database.getString("email","test"));
         }
         else {
-           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), locationvalue.getText().toString(), department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","tes"));
+           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), locationvalue.getText().toString(), department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","test"));
         }
         myRef.child(database.getString("userid","TEST")).setValue(teacher).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
