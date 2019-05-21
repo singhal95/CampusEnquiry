@@ -7,9 +7,14 @@ package campus.iit.nitin.com.campusenquiry;
 public class Teacher {
 
 
-    public String name,empid,location,department,officenumber,mobilenumber,profilephotourl;
+    public String name,empid,location,department,officenumber,mobilenumber,profilephotourl,email;
 
-    public Teacher(String name, String empid, String location, String department, String officenumber, String mobilenumber, String profilephotourl) {
+
+    public Teacher(){
+
+    }
+
+    public Teacher(String name, String empid, String location, String department, String officenumber, String mobilenumber, String profilephotourl,String email) {
         this.name = name;
         this.empid = empid;
         this.location = location;
@@ -17,6 +22,16 @@ public class Teacher {
         this.officenumber = officenumber;
         this.mobilenumber = mobilenumber;
         this.profilephotourl = profilephotourl;
+        this.email=email;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getName() {

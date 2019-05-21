@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             passwordtext.setError(null);
         }
 
-    if(!teacherbutton.isChecked() || !studentbutton.isChecked())
+    if(!teacherbutton.isChecked() && !studentbutton.isChecked())
         {
             valid=false;
         }

@@ -263,6 +263,7 @@ public class TeacherRegisterActivity extends AppCompatActivity {
                                 String postalCode = addresses.get(0).getPostalCode();
                                 String completeaddress=address+" "+city+" "+state+" "+country+" "+postalCode;
                                 locationvalue.setText(completeaddress);
+
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -279,10 +280,10 @@ public class TeacherRegisterActivity extends AppCompatActivity {
         }
         Teacher teacher;
         if(fileurl.equals("")){
-            teacher=new Teacher(name.getText().toString(),employeid.getText().toString(),locationvalue.getText().toString(),department.getText().toString(),officenumber.getText().toString(),mobilenumber.getText().toString(),"TEST");
+            teacher=new Teacher(name.getText().toString(),employeid.getText().toString(),locationvalue.getText().toString(),department.getText().toString(),officenumber.getText().toString(),mobilenumber.getText().toString(),"TEST",database.getString("email","test"));
         }
         else {
-           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), locationvalue.getText().toString(), department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl);
+           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), locationvalue.getText().toString(), department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","tes"));
         }
         myRef.child(database.getString("userid","TEST")).setValue(teacher).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

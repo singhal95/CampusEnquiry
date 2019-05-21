@@ -1,8 +1,11 @@
 package campus.iit.nitin.com.campusenquiry;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +16,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener ,Teacher_request.itemteachertouch{
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +48,6 @@ public class MainScreen extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
@@ -54,13 +62,19 @@ public class MainScreen extends AppCompatActivity
 
         }
         else if(id==R.id.request){
-
+       Teacher_request fragment= new Teacher_request(MainScreen.this);
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment,fragment);
+            fragmentTransaction.commit();
         }
         else if(id==R.id.student){
 
         }
         else if(id==R.id.logout){
-
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(MainScreen.this,MainActivity.class));
+            finish();
         }
 
 
@@ -68,5 +82,14 @@ public class MainScreen extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onitemteachertouch() {
+      Student_Profile fragment= new Student_Profile();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
     }
 }

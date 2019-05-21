@@ -6,14 +6,23 @@ package campus.iit.nitin.com.campusenquiry;
 
 public class Student {
 
-    public String name,sid,department,mobilenumber,photourl;
+    public String name,sid,department,mobilenumber,photourl,email;
 
-    public Student(String name, String sid, String department, String mobilenumber, String photourl) {
+    public Student(String name, String sid, String department, String mobilenumber, String photourl,String email) {
         this.name = name;
         this.sid = sid;
         this.department = department;
         this.mobilenumber = mobilenumber;
         this.photourl = photourl;
+        this.email=email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getName() {

@@ -198,10 +198,10 @@ public class StudentRegisterActivity extends AppCompatActivity {
         }
         Student student;
         if(fileurl.equals("")){
-          student=new Student(name.getText().toString(),sid.getText().toString(),department.getText().toString(),mobilenumber.getText().toString(),"TEST");
+          student=new Student(name.getText().toString(),sid.getText().toString(),department.getText().toString(),mobilenumber.getText().toString(),"TEST",database.getString("email","test"));
         }
         else {
-          student = new Student(name.getText().toString(), sid.getText().toString(), department.getText().toString(), mobilenumber.getText().toString(), fileurl);
+          student = new Student(name.getText().toString(), sid.getText().toString(), department.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","test"));
         }
         myRef.child(database.getString("userid","TEST")).setValue(student).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

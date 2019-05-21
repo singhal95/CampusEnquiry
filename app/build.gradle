@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.firebase:firebase-storage:16.0.1'
     implementation 'com.karumi:dexter:4.2.0'
+    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation 'junit:junit:4.12'
     implementation 'com.squareup.picasso:picasso:2.71828'
     compile 'de.hdodenhof:circleimageview:2.2.0'

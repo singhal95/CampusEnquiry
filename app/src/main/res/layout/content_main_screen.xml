@@ -8,4 +8,10 @@
     tools:context="campus.iit.nitin.com.campusenquiry.MainScreen"
     tools:showIn="@layout/app_bar_main_screen">
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fragment"></FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

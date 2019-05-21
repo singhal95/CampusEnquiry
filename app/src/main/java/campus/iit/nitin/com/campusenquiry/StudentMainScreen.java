@@ -1,8 +1,11 @@
 package campus.iit.nitin.com.campusenquiry;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,7 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class StudentMainScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,Student_teacher.itemtouch{
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +60,11 @@ public class StudentMainScreen extends AppCompatActivity
 
         }
         else if(id==R.id.teacher){
-
+           Student_teacher fragment= new Student_teacher(StudentMainScreen.this);
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment,fragment);
+            fragmentTransaction.commit();
         }
         else if(id==R.id.known){
 
@@ -69,5 +79,14 @@ public class StudentMainScreen extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onitemtouch() {
+     Teacher_Profile fragment= new Teacher_Profile();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
     }
 }
