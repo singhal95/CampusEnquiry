@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,Teacher_request.itemteachertouch{
+        implements NavigationView.OnNavigationItemSelectedListener ,Teacher_request.itemteachertouch,Student_Profile.action,Teacheraddedstudent.myaddedstudenttouch{
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -77,6 +77,11 @@ public class MainScreen extends AppCompatActivity
             fragmentTransaction.commit();
         }
         else if(id==R.id.student){
+            Teacheraddedstudent fragment= new Teacheraddedstudent(MainScreen.this);
+            fragmentManager = getSupportFragmentManager();
+            fragmentTransaction=fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment,fragment);
+            fragmentTransaction.commit();
 
         }
         else if(id==R.id.logout){
@@ -94,7 +99,25 @@ public class MainScreen extends AppCompatActivity
 
     @Override
     public void onitemteachertouch() {
-      Student_Profile fragment= new Student_Profile();
+      Student_Profile fragment= new Student_Profile(MainScreen.this);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onAction() {
+        Teacher_request fragment= new Teacher_request(MainScreen.this);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onmyaddedstudenttouch() {
+      Myaddedstudentprofile fragment= new Myaddedstudentprofile();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment,fragment);

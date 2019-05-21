@@ -129,11 +129,13 @@ public class Student_teacher extends Fragment {
                                 teacherid.add(dataSnapshot1.getKey());
                                 teacherdetails.add(value);
                                 teachername.add(value.getName());
+
                             }
+                            progressDialog.dismiss();
+                            arrayAdapter1.notifyDataSetChanged();
+
 
                         }
-                        arrayAdapter1.notifyDataSetChanged();
-                        progressDialog.dismiss();
 
                     }
 

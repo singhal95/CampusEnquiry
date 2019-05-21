@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,25 +29,30 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 @SuppressLint("ValidFragment")
-public class Teacher_request extends Fragment {
+public class Teacheraddedstudent extends Fragment {
 
 
 
-    itemteachertouch itemteachertouch;
-    @SuppressLint("ValidFragment")
-    public Teacher_request(itemteachertouch itemteachertouch) {
-        this.itemteachertouch=itemteachertouch;
-    }
 
+
+
+    myaddedstudenttouch myaddedstudenttouch;
     ListView listView;
     FirebaseDatabase firebasedatabase;
     DatabaseReference myRef;
+    DatabaseReference myRef1;
     SharedPreferences database;
     SharedPreferences.Editor editor;
-    ArrayList<String> studentid;
-    ArrayList<String> studentname;
-    ArrayList<StudentRequest> studentRequests;
     ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> studentid;
+    ArrayList<String> student_remarks;
+    ArrayList<String> studentname;
+    @SuppressLint("ValidFragment")
+    public Teacheraddedstudent(myaddedstudenttouch myaddedstudenttouch) {
+        this.myaddedstudenttouch=myaddedstudenttouch;
+        // Required empty public constructor
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,35 +63,50 @@ public class Teacher_request extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_teacher_request, container, false);
-        listView = view.findViewById(R.id.list);
+        // Inflate the layout for this fragment
+      View view= inflater.inflate(R.layout.fragment_teacheraddedstudent, container, false);
         firebasedatabase = FirebaseDatabase.getInstance();
         myRef = firebasedatabase.getReference("Teachers");
+        myRef1 = firebasedatabase.getReference("Students");
         database = getContext().getSharedPreferences("TEACHER", MODE_PRIVATE);
         editor = database.edit();
         studentid = new ArrayList<>();
-        studentname = new ArrayList<>();
-        studentRequests = new ArrayList<>();
-        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, studentname);
+        student_remarks=new ArrayList<>();
+        studentname=new ArrayList<>();
+        listView = view.findViewById(R.id.list);
+        arrayAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1,studentname);
         listView.setAdapter(arrayAdapter);
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Getting List........");
         progressDialog.show();
-
-        myRef.child(database.getString("userid", "TEST")).child("Request").addValueEventListener(new ValueEventListener() {
+        myRef.child(database.getString("userid", "TEST")).child("Student").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Iterable<DataSnapshot> dataSnapshots = dataSnapshot.getChildren();
                 for (DataSnapshot dataSnapshot1 : dataSnapshots) {
-                    StudentRequest studentRequest = dataSnapshot1.getValue(StudentRequest.class);
                     studentid.add(dataSnapshot1.getKey());
-                    studentRequests.add(studentRequest);
-                    studentname.add(studentRequest.getName());
-                    progressDialog.dismiss();
+                    student_remarks.add(dataSnapshot1.getValue(String.class));
+                    myRef1.child(dataSnapshot1.getKey()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            studentname.add(dataSnapshot.child("name").getValue(String.class));
+                            Log.i("nitin123",studentname.get(studentname.size()-1));
+                            arrayAdapter.notifyDataSetChanged();
+                        }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    Log.i("nitin123",String.valueOf(studentid.size()));
+
+                    progressDialog.dismiss();
                 }
-                arrayAdapter.notifyDataSetChanged();
+
+
 
 
             }
@@ -96,25 +117,25 @@ public class Teacher_request extends Fragment {
             }
         });
 
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                editor.putString("Studentname", studentRequests.get(position).getName());
-                editor.putString("Studentremarks", studentRequests.get(position).getRemaks());
+                editor.putString("Studentname", studentname.get(position));
+                editor.putString("Studentremarks", student_remarks.get(position));
                 editor.putString("studentid", studentid.get(position));
                 editor.commit();
-                itemteachertouch.onitemteachertouch();
+                myaddedstudenttouch.onmyaddedstudenttouch();
             }
         });
 
 
         return view;
     }
-    public interface itemteachertouch{
-        public void onitemteachertouch();
+
+    public interface myaddedstudenttouch{
+        public void onmyaddedstudenttouch();
     }
-
-
 
 
 
