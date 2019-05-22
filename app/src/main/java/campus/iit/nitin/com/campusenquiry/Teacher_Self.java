@@ -68,7 +68,10 @@ public class Teacher_Self extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
-                    name.setText(dataSnapshot.child("name").getValue(String.class));
+                    String namevalue=dataSnapshot.child("name").getValue(String.class);
+                    name.setText(namevalue);
+                    editor.putString("username",namevalue);
+                    editor.commit();
                     email.setText(dataSnapshot.child("email").getValue(String.class));
                     empid.setText(dataSnapshot.child("empid").getValue(String.class));
                     location.setText(dataSnapshot.child("location").getValue(String.class));

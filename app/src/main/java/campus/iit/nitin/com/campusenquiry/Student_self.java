@@ -69,7 +69,10 @@ public class Student_self extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
-                    name.setText(dataSnapshot.child("name").getValue(String.class));
+                    String namevalue=dataSnapshot.child("name").getValue(String.class);
+                    name.setText(namevalue);
+                    editor.putString("username",namevalue);
+                    editor.commit();
                     email.setText(dataSnapshot.child("email").getValue(String.class));
                  depatment.setText(dataSnapshot.child("department").getValue(String.class));
                     mobile.setText(dataSnapshot.child("mobilenumber").getValue(String.class));

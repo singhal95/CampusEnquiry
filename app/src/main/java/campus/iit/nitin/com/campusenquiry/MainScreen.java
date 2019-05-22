@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainScreen extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener ,Teacher_request.itemteachertouch,Student_Profile.action,Teacheraddedstudent.myaddedstudenttouch{
+        implements NavigationView.OnNavigationItemSelectedListener ,Teacher_request.itemteachertouch,Student_Profile.action,Teacheraddedstudent.myaddedstudenttouch,Myaddedstudentprofile.myaddedstudenttouch{
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -117,7 +117,16 @@ public class MainScreen extends AppCompatActivity
 
     @Override
     public void onmyaddedstudenttouch() {
-      Myaddedstudentprofile fragment= new Myaddedstudentprofile();
+      Myaddedstudentprofile fragment= new Myaddedstudentprofile(MainScreen.this);
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment,fragment);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onmyaddedstudenttouch1() {
+   ChatRoom fragment= new ChatRoom();
         fragmentManager = getSupportFragmentManager();
         fragmentTransaction=fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment,fragment);

@@ -1,5 +1,6 @@
 package campus.iit.nitin.com.campusenquiry;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import com.squareup.picasso.Picasso;
 import static android.content.Context.MODE_PRIVATE;
 
 
+@SuppressLint("ValidFragment")
 public class Student_Teacher_Accept_Profile extends Fragment {
 
 
@@ -37,7 +39,11 @@ public class Student_Teacher_Accept_Profile extends Fragment {
     SharedPreferences database;
     SharedPreferences.Editor editor;
     String imageurl;
-    public Student_Teacher_Accept_Profile() {
+    String toname,toid;
+    studentteacherchat studentteacherchat;
+    @SuppressLint("ValidFragment")
+    public Student_Teacher_Accept_Profile(studentteacherchat studentteacherchat) {
+        this.studentteacherchat=studentteacherchat;
         // Required empty public constructor
     }
 
@@ -74,7 +80,8 @@ public class Student_Teacher_Accept_Profile extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot!=null) {
-                    name.setText(dataSnapshot.child("name").getValue(String.class));
+                    toname=dataSnapshot.child("name").getValue(String.class);
+                    name.setText(toname);
                     email.setText(dataSnapshot.child("email").getValue(String.class));
                     empid.setText(dataSnapshot.child("empid").getValue(String.class));
                     location.setText(dataSnapshot.child("location").getValue(String.class));
@@ -101,7 +108,10 @@ public class Student_Teacher_Accept_Profile extends Fragment {
         Chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                editor.putString("chattoname",toname);
+                editor.putString("chatoid",database.getString("teacherid","TEST"));
+                editor.commit();
+                studentteacherchat.onstudentteacherchattouch();
             }
         });
 
@@ -109,5 +119,8 @@ public class Student_Teacher_Accept_Profile extends Fragment {
         return view;
     }
 
+    public interface studentteacherchat{
+        public void onstudentteacherchattouch();
+    }
 
 }
