@@ -1,18 +1,24 @@
 package campus.iit.nitin.com.campusenquiry;
 
+import android.*;
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +40,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -72,11 +79,23 @@ action action;
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_student__profile, container, false);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
+        geocoder = new Geocoder(getContext(), Locale.getDefault());
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.READ_EXTERNAL_STORAGE},1);
+            }
+
+        }
+        else {
+          getlocation();
+        }
         imageView = view.findViewById(R.id.displayimage);
         name = view.findViewById(R.id.namevalue);
         sid = view.findViewById(R.id.sid);
         firebasedatabase = FirebaseDatabase.getInstance();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         myRef = firebasedatabase.getReference("Teachers");
         myRef1 = firebasedatabase.getReference("Students");
         database = getContext().getSharedPreferences("TEACHER", MODE_PRIVATE);
@@ -89,7 +108,6 @@ action action;
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Showing Profile");
         progressDialog.show();
-        getlocation();
         myRef1.child(database.getString("studentid","TEST")).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -122,7 +140,6 @@ action action;
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Adding To Student");
                 progressDialog.show();
-                getlocation();
 
                 myRef.child(database.getString("userid", "TEST")).child("Request").child(database.getString("studentid", "TEST")).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -134,7 +151,10 @@ action action;
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(getContext(), "Successfull added", Toast.LENGTH_SHORT).show();
-                                        myRef.child(database.getString("userid", "TEST")).child("location").setValue("hrllo").addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                        Log.i("nitin123",Constant.location);
+
+                                        myRef.child(database.getString("userid", "TEST")).child("location").setValue(Constant.location).addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Toast.makeText(getContext(), "Location Suceessfully updated", Toast.LENGTH_SHORT).show();
@@ -160,7 +180,6 @@ action action;
                 progressDialog.setIndeterminate(true);
                 progressDialog.setMessage("Decline To Student");
                 progressDialog.show();
-                getlocation();
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("Any Remarks For Decline");
                 final EditText input = new EditText(getContext());
@@ -213,12 +232,15 @@ action action;
                             // Logic to handle location object
                             try {
                                 addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                                String address = addresses.get(0).getAddressLine(0);
+                                Constant.location=address;
+                                Log.i("nitin123",Constant.location);// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                                 String city = addresses.get(0).getLocality();
                                 String state = addresses.get(0).getAdminArea();
                                 String country = addresses.get(0).getCountryName();
                                 String postalCode = addresses.get(0).getPostalCode();
                                 completeaddress[0]=address + " " + city + " " + state + " " + country + " " + postalCode;
+
 
 
 
@@ -232,6 +254,20 @@ action action;
         return completeaddress[0];
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode==1){
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1]==PackageManager.PERMISSION_GRANTED) {
+                getlocation();
+            }
+        }
+        else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},1);
+            }
+
+        }
+    }
 
 
     public interface action{
