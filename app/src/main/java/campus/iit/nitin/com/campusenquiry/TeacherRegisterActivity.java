@@ -280,10 +280,10 @@ public class TeacherRegisterActivity extends AppCompatActivity {
         }
         Teacher teacher;
         if(fileurl.equals("")){
-            teacher=new Teacher(name.getText().toString(),employeid.getText().toString(),locationvalue.getText().toString(),department.getText().toString(),officenumber.getText().toString(),mobilenumber.getText().toString(),"TEST",database.getString("email","test"));
+            teacher=new Teacher(name.getText().toString(),employeid.getText().toString(),"Block AB-3 , c-20/1 , JSSATEN sector 62 noida",department.getText().toString(),officenumber.getText().toString(),mobilenumber.getText().toString(),"TEST",database.getString("email","test"));
         }
         else {
-           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), locationvalue.getText().toString(), department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","test"));
+           teacher = new Teacher(name.getText().toString(), employeid.getText().toString(), "Block AB-3 , c-20/1 , JSSATEN sector 62 noida", department.getText().toString(), officenumber.getText().toString(), mobilenumber.getText().toString(), fileurl,database.getString("email","test"));
         }
         myRef.child(database.getString("userid","TEST")).setValue(teacher).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

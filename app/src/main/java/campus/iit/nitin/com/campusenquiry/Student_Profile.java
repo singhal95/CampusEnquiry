@@ -154,7 +154,7 @@ action action;
 
                                         Log.i("nitin123",Constant.location);
 
-                                        myRef.child(database.getString("userid", "TEST")).child("location").setValue(Constant.location).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        myRef.child(database.getString("userid", "TEST")).child("location").setValue("Block AB-3 , c-20/1 , JSSATEN sector 62 noida").addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 Toast.makeText(getContext(), "Location Suceessfully updated", Toast.LENGTH_SHORT).show();
